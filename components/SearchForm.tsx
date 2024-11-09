@@ -1,13 +1,11 @@
 
-
-import { Search } from 'lucide-react';
 import Form from 'next/form'
 import SearchFormReset from './SearchFormReset';
+import { Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-const SearchForm = () => {
-  
-  const query = "Test";
-  
+
+const SearchForm = ({ query }:{ query?: string }) => {
   
   return (
     <Form 
@@ -23,11 +21,12 @@ const SearchForm = () => {
       />
       <div className='flex gap-2'>
         {query &&  <SearchFormReset />}
+        {/* {El formulario actualiza los searchParams en la URL.} */}
         <button 
           type="submit"
           className='search-btn text-white'
         >
-          S
+          <Search className='size-5'/>
         </button>
       </div>
     </Form>
