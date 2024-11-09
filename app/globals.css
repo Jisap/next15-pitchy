@@ -198,14 +198,22 @@
     @apply font-medium text-[16px] bg-primary-100 px-4 py-2 rounded-full;
   }
 
+
+  /* Gradiente de izda a derecha con 4 paradas de color en un rango de 0 a 100%. Hasta el 49.5% el color es transparente,
+     justo despues entre el 49.5 y el 50.5 se aplican los colores rgba. Es ahí donde se visualiza la linea vertical.
+  */
   .pattern {
-    background-image: linear-gradient(to right,
+    background-image: linear-gradient(to right, 
         transparent 49.5%,
         rgba(251, 232, 67, 0.2) 49.5%,
         rgba(251, 232, 67, 0.6) 50.5%,
         transparent 50.5%);
+    /* Esto define el tamaño de cada repetición del gradiente como el 5% del ancho del contenedor y el 100% de su altura,
+      lo que hace que el gradiente se repita en intervalos estrechos y cubra toda la altura. */
     background-size: 5% 100%;
     background-position: center;
+    /* Repite el gradiente solo en el eje horizontal,
+      creando una serie de líneas verticales amarillas que están espaciadas uniformemente cada 5% del ancho del contenedor. */
     background-repeat: repeat-x;
   }
 
