@@ -21,7 +21,7 @@ const SearchForm = ({ query }:{ query?: string }) => {
       />
       <div className='flex gap-2'>
         {query &&  <SearchFormReset />}
-        {/* {El formulario actualiza los searchParams en la URL.} */}
+        {/* {El formulario Form actualiza los searchParams en la URL.} */}
         <button 
           type="submit"
           className='search-btn text-white'

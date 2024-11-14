@@ -1,14 +1,16 @@
 
 import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
 import SearchForm from "../../components/SearchForm";
-import { STARTUPS_QUERYS } from "@/sanity/lib/queries";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({searchParams}: {searchParams: Promise<{query?:string}>}) {
 
-  const query = (await searchParams).query;                              // Definición consulta a Sanity
+  const query = (await searchParams).query;                              // El Form actualiza los searchParams en la URL y aquí se recuperan
 
-  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERYS }); // Obtención de datos de Sanity en tiempo real
+  const params = { search: query || null }
+
+  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params }); // Obtención de datos de Sanity en tiempo real
 
   return (
     <>
