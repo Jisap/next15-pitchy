@@ -6,11 +6,11 @@ import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({searchParams}: {searchParams: Promise<{query?:string}>}) {
 
-  const query = (await searchParams).query;                              // El Form actualiza los searchParams en la URL y aquí se recuperan
+  const query = (await searchParams).query;                              // El Form actualiza los searchParams en la URL y aquí se recuperan en el query
 
-  const params = { search: query || null }
+  const params = { search: query || null }                               // los parámetros de busqueda de Sanity se igualan al query de la URL
 
-  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params }); // Obtención de datos de Sanity en tiempo real
+  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params }); // Se consulta a Sanity con los parámetros de busqueda y se recuperan los datos de los startups
 
   return (
     <>
