@@ -12,6 +12,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       profile: { id, login, bio }
     }){
       const existingUser = await client            // Busca en tu base de datos Sanity un usuario existente por el id de GitHub.
+        .withConfig({ useCdn: false })
         .fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
           id: id,
         });
@@ -33,6 +34,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, account, profile }) {       // next-auth generá un token que si es la 1ª vez que se autentica estará vacio
       if (account && profile) {                    // account y profile se obtienen de la respuesta de github y permiten...
         const user = await client                  // ...buscar un usuario en la base de datos en base al id del profile                  
+          .withConfig({ useCdn: false })
           .fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
             id: profile?.id,
           });
@@ -48,3 +50,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   }
 })
+
+
+// useCdn afectará cómo se gestionan las consultas hacia tu API de Sanity. 
+// useCdn: false: Esto desactiva el uso del CDN y fuerza a las consultas a obtener los datos 
+// directamente desde el servidor de origen de Sanity. En este caso, no hay caché involucrado, 
+// y siempre se obtendrán los datos más actualizados.
