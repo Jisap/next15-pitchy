@@ -8,16 +8,16 @@ import { unstable_after as after } from "next/server";
 
 
 const View = async ({ id }: { id: string }) => {
-  const { views: totalViews } = await client
+  const { views: totalViews } = await client            // Se obtiene el total de visualizaciones según id
     .withConfig({ useCdn: false })
     .fetch(STARTUP_VIEWS_QUERY, { id });
 
-  after(
+  after(                                                // despues de cargar la página se incrementa el total de visualizaciones
     async () =>
-      await writeClient
+      await writeClient                                 // Se usa writeClient que permite hacer mutaciones de escritura en la anterior llamada
         .patch(id)
-        .set({ views: totalViews + 1 })
-        .commit(),
+        .set({ views: totalViews + 1 })                 // Se incrementa el total de visualizaciones
+        .commit(),                                      // Se ejecuta la mutación     
   );
 
   return (

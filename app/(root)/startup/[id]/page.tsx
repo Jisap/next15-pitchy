@@ -78,6 +78,7 @@ const Page = async({ params }: { params: Promise<{ id: string }> }) => {
 
       </section>
      
+     {/* Hasta que View no termine de cargar, se mostrará el Skeleton y despues se mostrará la View */}
       <Suspense fallback={<Skeleton className="view_skeleton" />}>
         <View id={id} />
       </Suspense>
