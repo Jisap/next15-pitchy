@@ -15,6 +15,7 @@ const StartUpForm = () => {
     const [pitch, setPitch] = useState("");
     const { toast } = useToast();
     const router = useRouter();
+    const isPending = false;
 
   return (
     <form 
@@ -109,7 +110,9 @@ const StartUpForm = () => {
       <Button
         type="submit"
         className="startup-form_btn text-white"  
+        disabled={isPending}
       >  
+        {isPending ? "Submitting..." : "Submit Your Pitch"}
         <Send className="size-6 ml-2" />
       </Button>
     </form>
