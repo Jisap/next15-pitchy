@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import { formSchema } from "@/lib/validation";
 import { z } from "zod"
+import { createPitch } from "@/lib/actions";
 
 const StartUpForm = () => {
 
@@ -29,19 +30,18 @@ const StartUpForm = () => {
         }
 
         await formSchema.parseAsync(formValues);                             // Se validan los valores del formulario según el esquema
-        console.log(formValues);
-        //const result = await createIdea(prevState ,formData, pitch)
-        //console.log(result);
+      
+        const result = await createPitch(prevState ,formData, pitch)         // Se crea el objeto startup y se graba en la base de datos
+     
+        if (result.status == "SUCCESS") {
+          toast({
+            title: "Success",
+            description: "Your startup pitch has been created successfully",
+          });
+          router.push(`/startup/${result._id}`);
+        }
+        return result
         
-        // if (result.status == "SUCCESS") {
-        //   toast({
-        //     title: "Success",
-        //     description: "Your startup pitch has been created successfully",
-        //   });
-
-        //   router.push(`/startup/${result._id}`);
-        // }
-        // return result
       } catch (error) {
         console.log({error});
         if (error instanceof z.ZodError) {
