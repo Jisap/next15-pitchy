@@ -18,9 +18,9 @@ const StartUpForm = () => {
     const { toast } = useToast();
     const router = useRouter();
 
-    const handleFormSubmit = async (prevState: any, formData: FormData) => {
+    const handleFormSubmit = async (prevState: any, formData: FormData) => {  // Submit del formulario
       try {
-        const formValues = {
+        const formValues = {                                                  // Se obtienen los valores del formulario
           title: formData.get("title") as string,
           description: formData.get("description") as string,
           category: formData.get("category") as string,
@@ -28,7 +28,7 @@ const StartUpForm = () => {
           pitch 
         }
 
-        await formSchema.parseAsync(formValues);
+        await formSchema.parseAsync(formValues);                             // Se validan los valores del formulario según el esquema
         console.log(formValues);
         //const result = await createIdea(prevState ,formData, pitch)
         //console.log(result);
@@ -72,11 +72,10 @@ const StartUpForm = () => {
       }
     }
    
-    const [state, formAction, isPending] = useActionState(handleFormSubmit, {
-        error: "",
-        status: "INITIAL",
-      }
-    )
+    const [state, formAction, isPending] = useActionState(handleFormSubmit, { // El state esta referenciado al action del form
+        error: "",                                                            // y cuando se hace submit se llama al action 
+      status: "INITIAL",                                                      // de useActionState que se pasa como argumento (handleSubmit) 
+    })
 
 
   return (
