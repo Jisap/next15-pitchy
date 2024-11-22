@@ -1,6 +1,7 @@
 import { auth, signOut, signIn } from "@/auth"
 import Image from "next/image"
 import Link from "next/link"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 
 const Navbar = async() => {
@@ -30,8 +31,14 @@ const Navbar = async() => {
                 </button>
               </form>
 
-              <Link href={`/user/${session?.user?.id}`}>
-                <span>{session?.user?.name}</span>
+              <Link href={`/user/${session?.id}`}>
+                <Avatar className="size-10">
+                  <AvatarImage
+                    src={session?.user?.image || ""}
+                    alt={session?.user?.name || ""}
+                  />
+                  <AvatarFallback>{session?.user?.name?.[0]}</AvatarFallback>
+                </Avatar>
               </Link>
             </>
           ) : (
