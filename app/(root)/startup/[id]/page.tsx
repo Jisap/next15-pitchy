@@ -1,12 +1,13 @@
 import { formatDate } from '@/lib/utils';
 import { client } from '@/sanity/lib/client';
-import { STARTUP_BY_ID_QUERY } from '@/sanity/lib/queries';
+import { PLAYLIST_BY_SLUG_QUERY, STARTUP_BY_ID_QUERY } from '@/sanity/lib/queries';
 import Image from 'next/image';
 import Link from 'next/link';
 import markdownit from "markdown-it";
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import View from '@/components/View';
+import StartupCard, { StartupTypeCard } from '@/components/StartupCard';
 
 const md = markdownit();
 
@@ -20,6 +21,8 @@ const Page = async({ params }: { params: Promise<{ id: string }> }) => {
   if(!post) return <h1>No startup found</h1>
 
   const parsedContent = md.render(post?.pitch || ""); // Markdown to HTML
+
+  const { select: editorPosts } = await client.fetch(PLAYLIST_BY_SLUG_QUERY, {slug: "editor-picks"})
 
   return (
     <>
@@ -75,6 +78,22 @@ const Page = async({ params }: { params: Promise<{ id: string }> }) => {
         <hr className="divider" />
 
         {/* Editor Selected Startups */}
+        {editorPosts?.length > 0 && (
+          <div className="max-w-4xl mx-auto">
+            <p className='text-30-semibold'>
+              Editor&apos;s Picks
+            </p>
+            <ul className='mt-7 card_grid-sm'>
+              {editorPosts.map((post:StartupTypeCard, index:number) => (
+                <StartupCard 
+                  key={index}
+                  post={post}
+                />
+              ))}
+            </ul>
+          </div>
+        )}
+
 
       </section>
      
